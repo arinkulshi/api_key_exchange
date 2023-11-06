@@ -6,6 +6,8 @@ const VideoPlayer = () => {
   const [videoInfo, setVideoInfo] = useState(null);
   const [purchaseStatus, setPurchaseStatus] = useState(null);
   const [isSubmitting,setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     const fetchVideoInfo = async () => {
@@ -26,6 +28,14 @@ const VideoPlayer = () => {
     });
 
     const data = await response.json();
+
+    if (data.status === 'failed' && data.message === 'Incorrect pin') {
+      setErrorMessage('Incorrect PIN. Please try again.');
+      return;
+    }
+
+    setErrorMessage(null);
+    setSuccessMessage('Purchase is successful. Loading video...');
     setPurchaseStatus(data.status);
 
     if (data.status === 'waiting') {
@@ -50,7 +60,7 @@ const VideoPlayer = () => {
     return (
       <div className="video-content">
         <video src={videoInfo.videoUrl} controls autoPlay/>
-        <div>Video "{videoInfo.title}" has been purchased</div>
+       <div><h3>Video "{videoInfo.title}" has been purchased</h3></div>
       </div>
     );
   }
@@ -58,13 +68,14 @@ const VideoPlayer = () => {
   return (
     <div className="video-player">
     <h1>React Video Player Purchase Screen</h1>
-    {isSubmitting && <div>Please wait while the video is being purchased...</div>}
+    {errorMessage && <div>{errorMessage}</div>}
+    {successMessage && <div>{successMessage}</div>}
     {purchaseStatus === 'waiting' && <PurchaseModal onPurchase={handlePurchase} />}
     <button onClick={() => setPurchaseStatus('waiting')}>Purchase Video</button>
     {videoInfo.status === 'purchased' && (
       <div >
         <video src={videoInfo.videoUrl} controls autoPlay />
-        <div>Video "{videoInfo.title}" has been purchased</div>
+        <h1>Video "{videoInfo.title}" has been purchased </h1>
       </div>
     )}
   </div>
