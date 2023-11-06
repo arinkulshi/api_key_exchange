@@ -1,0 +1,48 @@
+
+  
+  .video-player h1 {
+    margin-bottom: 50px;
+  }
+
+
+  .video-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+  }
+
+
+  
+  
+  .video-player button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .video-player button:hover {
+    background-color: #0056b3;
+  }
+  
+ 
+
+  .video-player div {
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+
+
+
+  .video-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
